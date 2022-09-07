@@ -52,6 +52,8 @@ app.post("/conta", (req, res) =>{
 // Estrato
 app.get("/estrato", verificaCpfConta, (req, res) => {
     const { cliente } = req;
+
+
     return res.status(201).json(cliente.estrato)
     
 });
@@ -59,16 +61,20 @@ app.get("/estrato", verificaCpfConta, (req, res) => {
 
 //Depositar
 app.post("/deposito", verificaCpfConta, (req, res)=>{
-    const { cliente } = req;
-    const{valor, descricao} = req.body;
-
+    const {cliente} = req
+    const {valor, descricao} = req.body
+     
     const depositoBancario = {
         nome: cliente.nome,
-        descricao,
         data_op: new Date(),
         valor,
-        typo: "Conta Corrente"
-    }
+        descricao,
+        typy: "Conta Corrente",
+    };
+
+
+    cliente.saldo += valor;
+    
 
     cliente.estrato.push(depositoBancario)
 
@@ -76,6 +82,44 @@ app.post("/deposito", verificaCpfConta, (req, res)=>{
         "msgSucess": "Deposito feito com sucesso! "
     })
 
+});
+
+
+//Sacar
+app.post("/sacar", verificaCpfConta, (req, res)=>{
+    const {cliente} = req
+    const {valor} = req.body
+
+    
+const saqueBancario = {
+        nome: cliente.nome,
+        data_op: new Date(),
+        valor,
+        typy: "Conta Corrente",
+    }
+
+    if(cliente.saldo < valor){
+        res.status(400).json({
+            "msgErro": "Saldo insuficiente"
+        })
+
+    }else{
+        cliente.saldo -= valor
+
+        res.status(201).json({
+            "msgSucesso": "Saque efetuado com sucesso"
+        });
+    };
+
+    cliente.estrato.push(saqueBancario)
+});
+
+//Buscar Conta
+app.get('/conta', verificaCpfConta, (req, res)=>{
+    const { cliente } = req;
+
+
+    res.status(201).json(cliente)
 })
 
 
