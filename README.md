@@ -5,7 +5,7 @@
 ### Requisitos
 
 
-- [x] Dever ser possivel criar uma conta 
+- [] Dever ser possivel criar uma conta 
 - [] Deve ser possivel buscar o estrato Bancario
 - [] Deve ser possivel realizar um  Saque
 - [] Deve ser possivel realizar um deposito
@@ -17,7 +17,7 @@
 
 ## Regras de negocio
 
-- [x] Não deve ser possivel cadastrar uma conta com o CPF já Existemte
+- [] Não deve ser possivel cadastrar uma conta com o CPF já Existemte
 - [] Não deve ser Possivel fazer uma deposito em uma conta não existente
 - [] Não deve ser possivel buscar estrato em uma conta não existente
 - [] não deve ser possivel fazer um asaque em uma conta não existente
