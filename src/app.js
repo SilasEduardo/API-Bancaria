@@ -22,7 +22,6 @@ function verificaCpfConta(req, res, next){
    return next()
 }
 
-
 // criar conta;
 app.post("/conta", (req, res) =>{
     const {cpf, nome} = req.body;
@@ -49,22 +48,37 @@ app.post("/conta", (req, res) =>{
     });
 });
 
+
+// Estrato
 app.get("/estrato", verificaCpfConta, (req, res) => {
     const { cliente } = req;
-
-    const primeiroExtrato = {
-        nome: cliente.nome,
-        data_op: new Date(),
-        valo: cliente.saldo,
-        typo: "Conta Corrente"
-
-    };
-
-    cliente.estrato.push(primeiroExtrato);
-
     return res.status(201).json(cliente.estrato)
     
+});
+
+
+//Depositar
+app.post("/deposito", verificaCpfConta, (req, res)=>{
+    const { cliente } = req;
+    const{valor, descricao} = req.body;
+
+    const depositoBancario = {
+        nome: cliente.nome,
+        descricao,
+        data_op: new Date(),
+        valor,
+        typo: "Conta Corrente"
+    }
+
+    cliente.estrato.push(depositoBancario)
+
+    res.status(201).json({
+        "msgSucess": "Deposito feito com sucesso! "
+    })
+
 })
+
+
 
 
 
