@@ -135,6 +135,18 @@ app.put("/conta", verificaCpfConta, (req, res)=>{
 })
 
 
+//Delete Conta
+
+app.delete("/conta", verificaCpfConta, (req, res)=>{
+    const {cliente} = req;
+
+    clientes.splice(cliente, 1)
+
+    res.status(201).json({
+        "msgSucesso": "Conta deletada com sucesso!"
+    })
+})
+
 
 
 
