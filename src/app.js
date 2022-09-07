@@ -120,6 +120,18 @@ app.get('/conta', verificaCpfConta, (req, res)=>{
 
 
     res.status(201).json(cliente)
+});
+
+//Atualizar 
+app.put("/conta", verificaCpfConta, (req, res)=>{
+    const {cliente} = req;
+    const {nome} = req.body;
+
+    cliente.nome = nome;
+
+    res.status(201).json({
+        "msg": "Conta Atualizada com sucesso!"
+    })
 })
 
 
